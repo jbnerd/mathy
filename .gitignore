@@ -1,2 +1,5 @@
 # PyCharm settings
 .idea
+
+# Python cache
+*/__pycache__/*
