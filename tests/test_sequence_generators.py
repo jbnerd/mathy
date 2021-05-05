@@ -1,4 +1,4 @@
-from . import _init_paths
+from tests import _init_paths
 from lib.sequence_generators import FibonacciSequenceGenerator
 
 

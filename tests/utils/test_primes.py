@@ -1,8 +1,7 @@
 from typing import List
 import pytest
 
-from tests import _init_paths
-from lib.prime_number_utils import is_prime, get_prime_factors
+from lib.utils.primes import is_prime, get_prime_factors
 
 
 @pytest.mark.parametrize('num', [
@@ -22,6 +21,7 @@ def test_not_is_prime(num: int):
 @pytest.mark.parametrize('num, correct_factors', [
     (39, [3, 13]),
     (13195, [5, 7, 13, 29]),
+    (111111, [3, 7, 11, 13, 37]),
     (600851475143, [71, 839, 1471, 6857])
 ])
 def test_get_prime_factors(num: int, correct_factors: List[int]):
