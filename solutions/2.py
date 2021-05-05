@@ -1,4 +1,4 @@
-import _init_paths
+from solutions import _init_paths
 from lib.sequence_generators import FibonacciSequenceGenerator
 
 if __name__ == "__main__":
