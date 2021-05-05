@@ -36,3 +36,17 @@ class FibonacciSequenceGenerator:
                 first, second = second, third
                 yield third
             i += 1
+
+
+class PrimeNumberSequenceGenerator:
+    """Produces prime numbers with the method of Sieve of Eratosthenes."""
+
+    @classmethod
+    def generate(cls, upper_bound: int) -> List[int]:
+        """upper_bound is inclusive."""
+        prime_numbers, candidates = [], [i for i in range(2, upper_bound + 1)]
+        while len(candidates) > 0:
+            prime_numbers.append(candidates[0])
+            candidates = [i for i in candidates if i % candidates[0] != 0]
+        return prime_numbers
+

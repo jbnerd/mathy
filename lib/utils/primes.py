@@ -1,5 +1,7 @@
 from math import sqrt
-from typing import Set
+from typing import List, Set
+
+from lib.sequence_generators import PrimeNumberSequenceGenerator
 
 
 def is_prime(num: int) -> bool:
@@ -26,3 +28,7 @@ def get_prime_factors(num: int) -> Set[int]:
             factors.append(i)
             factors.append(num / i)
     return set([factor for factor in factors if is_prime(factor)])
+
+
+def get_primes(upper_bound: int) -> List[int]:
+    return PrimeNumberSequenceGenerator.generate(upper_bound)
