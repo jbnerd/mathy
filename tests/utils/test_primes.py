@@ -5,7 +5,7 @@ from lib.utils.primes import is_prime, get_prime_factors
 
 
 @pytest.mark.parametrize('num', [
-    2, 3, 17, 31, 101, 37
+    2, 3, 5, 7, 17, 31, 101, 37
 ])
 def test_is_prime(num: int):
     assert is_prime(num)

@@ -5,9 +5,13 @@ from typing import Set
 def is_prime(num: int) -> bool:
     if num < 2:
         return False
+    if num == 2 or num == 3:
+        return True
     else:
+        if num % 2 == 0:
+            return False
         upper_bound = int(sqrt(num))
-        for i in range(2, upper_bound + 1):
+        for i in range(3, upper_bound + 1, 2):
             if num % i == 0:
                 return False
         return True
