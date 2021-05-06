@@ -8,6 +8,10 @@ def sum_of_natural_numbers(n: int) -> int:
     return int(n * (n + 1) / 2)
 
 
+def sum_of_squares_of_natural_numbers(n: int) -> int:
+    return int(n * (n + 1) * (2 * n + 1) / 6)
+
+
 def least_common_multiple(numbers: List[int]) -> int:
     primes, lcm = PrimeNumberSequenceGenerator.generate(max(numbers)), 1
     for prime in primes:

@@ -10,3 +10,4 @@ solved with problem names and links for navigability.
 - [X] 3: [Largest prime factor](https://projecteuler.net/problem=3)
 - [X] 4: [Largest palindrome product](https://projecteuler.net/problem=4)
 - [X] 5: [Smallest multiple](https://projecteuler.net/problem=5)
+- [X] 6: [Sum square difference](https://projecteuler.net/problem=6)
