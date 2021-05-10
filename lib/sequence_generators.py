@@ -1,3 +1,5 @@
+from math import sqrt
+
 from typing import List, Iterable
 
 
@@ -45,8 +47,9 @@ class PrimeNumberSequenceGenerator:
     def generate(cls, upper_bound: int) -> List[int]:
         """upper_bound is inclusive."""
         prime_numbers, candidates = [], [i for i in range(2, upper_bound + 1)]
-        while len(candidates) > 0:
+        check_limit = sqrt(upper_bound + 1)
+        while len(candidates) > 0 and candidates[0] <= check_limit:
             prime_numbers.append(candidates[0])
             candidates = [i for i in candidates if i % candidates[0] != 0]
+        prime_numbers += candidates
         return prime_numbers
-

@@ -1,7 +1,7 @@
 from typing import List
 import pytest
 
-from lib.utils.primes import is_prime, get_prime_factors
+from lib.utils.primes import is_prime, get_prime_factors, get_nth_prime
 
 
 @pytest.mark.parametrize('num', [
@@ -27,3 +27,11 @@ def test_not_is_prime(num: int):
 def test_get_prime_factors(num: int, correct_factors: List[int]):
     predicted_factors = get_prime_factors(num)
     assert predicted_factors == set(correct_factors)
+
+
+@pytest.mark.parametrize('n, prime', [
+    (6, 13),
+    (100, 541)
+])
+def test_get_nth_prime(n, prime):
+    assert prime == get_nth_prime(n)
