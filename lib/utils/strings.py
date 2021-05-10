@@ -1,3 +1,6 @@
+import functools
+
+
 def is_palindrome_number(num: int) -> bool:
     num = str(num)
     rev_num = reversed(num)
@@ -5,3 +8,7 @@ def is_palindrome_number(num: int) -> bool:
         if i != j:
             return False
     return True
+
+
+def character_wise_product(string: str) -> int:
+    return functools.reduce(lambda a, b: int(a) * int(b), string)
