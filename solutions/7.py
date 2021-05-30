@@ -1,5 +1,5 @@
 """Plan of attack:
-    v1: (0.057841 seconds)
+    v1: (0.006092 seconds)
         The upper bound of nth prime is given by n(logn + loglogn) for all n >= 6.
 """
 import _init_paths

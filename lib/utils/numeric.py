@@ -1,7 +1,7 @@
 from math import log, sqrt
-from typing import List, Set
+from typing import List
 
-from lib.sequence_generators import PrimeNumberSequenceGenerator
+from lib.utils.primes import get_primes
 
 
 def sum_of_natural_numbers(n: int) -> int:
@@ -13,7 +13,7 @@ def sum_of_squares_of_natural_numbers(n: int) -> int:
 
 
 def least_common_multiple(numbers: List[int]) -> int:
-    primes, lcm = PrimeNumberSequenceGenerator.generate(max(numbers)), 1
+    primes, lcm = get_primes(max(numbers)), 1
     for prime in primes:
         exhausted = False
         while not exhausted:
@@ -36,26 +36,19 @@ def least_common_multiple_first_n_natural_numbers(upper_bound: int) -> int:
         upper_bound is inclusive
     """
     lcm, limit = 1, sqrt(upper_bound)
-    primes = PrimeNumberSequenceGenerator.generate(upper_bound)
+    primes = get_primes(upper_bound)
     for prime in primes:
         exponent = int(log(upper_bound) / log(prime)) if prime <= limit else 1
         lcm *= prime ** exponent
     return lcm
 
 
-def generate_factors(num: int) -> Set[int]:
-    """Generates proper factors of the given number."""
+def get_factors(num: int) -> List[int]:
+    """Returns a sorted list of proper factors."""
     upper_bound = int(sqrt(num))
-    factors = []
+    factors = set()
     for i in range(2, upper_bound + 1):
         if num % i == 0:
-            factors.append(i)
-            factors.append(int(num / i))
-    return set(factors)
-
-
-def get_factors(num: int) -> List[int]:
-    """Returns a sorted list of proper factors.
-        TODO: Merge this function with generate_factors function once the other dependencies are removed.
-    """
-    return sorted(list(generate_factors(num)))
+            factors.add(i)
+            factors.add(int(num / i))
+    return sorted(list(factors))

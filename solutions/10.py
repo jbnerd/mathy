@@ -1,5 +1,5 @@
 """Plan of attack:
-    v1: (2.219316 seconds)
+    v1: (0.117498 seconds)
         Generate the primes using sieve and add.
 """
 from functools import reduce
