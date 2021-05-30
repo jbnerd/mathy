@@ -14,3 +14,4 @@ solved with problem names and links for navigability.
 - [X] 7: [10001st prime](https://projecteuler.net/problem=7)
 - [X] 8: [Largest product in a series](https://projecteuler.net/problem=8)
 - [X] 9: [Special Pythagorean triplet](https://projecteuler.net/problem=9)
+- [X] 10: [Summation of primes](https://projecteuler.net/problem=10)

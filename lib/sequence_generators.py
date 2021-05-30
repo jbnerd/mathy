@@ -46,10 +46,12 @@ class PrimeNumberSequenceGenerator:
     @classmethod
     def generate(cls, upper_bound: int) -> List[int]:
         """upper_bound is inclusive."""
-        prime_numbers, candidates = [], [i for i in range(2, upper_bound + 1)]
+        prime_numbers, candidates = [2], list(range(3, upper_bound + 1, 2))
         check_limit = sqrt(upper_bound + 1)
-        while len(candidates) > 0 and candidates[0] <= check_limit:
-            prime_numbers.append(candidates[0])
-            candidates = [i for i in candidates if i % candidates[0] != 0]
+        next_candidate = candidates[0]
+        while next_candidate <= check_limit:
+            prime_numbers.append(next_candidate)
+            candidates = [i for i in candidates if i % next_candidate != 0]
+            next_candidate = candidates[0]
         prime_numbers += candidates
         return prime_numbers
