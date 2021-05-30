@@ -1,5 +1,5 @@
 from math import log, sqrt
-from typing import List
+from typing import List, Set
 
 from lib.sequence_generators import PrimeNumberSequenceGenerator
 
@@ -41,3 +41,21 @@ def least_common_multiple_first_n_natural_numbers(upper_bound: int) -> int:
         exponent = int(log(upper_bound) / log(prime)) if prime <= limit else 1
         lcm *= prime ** exponent
     return lcm
+
+
+def generate_factors(num: int) -> Set[int]:
+    """Generates proper factors of the given number."""
+    upper_bound = int(sqrt(num))
+    factors = []
+    for i in range(2, upper_bound + 1):
+        if num % i == 0:
+            factors.append(i)
+            factors.append(int(num / i))
+    return set(factors)
+
+
+def get_factors(num: int) -> List[int]:
+    """Returns a sorted list of proper factors.
+        TODO: Merge this function with generate_factors function once the other dependencies are removed.
+    """
+    return sorted(list(generate_factors(num)))

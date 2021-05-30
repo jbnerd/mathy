@@ -2,6 +2,7 @@ from math import ceil, log, sqrt
 from typing import List, Set
 
 from lib.sequence_generators import PrimeNumberSequenceGenerator
+from lib.utils.numeric import generate_factors
 
 
 def is_prime(num: int) -> bool:
@@ -20,14 +21,8 @@ def is_prime(num: int) -> bool:
 
 
 def get_prime_factors(num: int) -> Set[int]:
-    """Returns a set of factors excluding 1 and the number itself."""
-    upper_bound = int(sqrt(num))
-    factors = []
-    for i in range(2, upper_bound + 1):
-        if num % i == 0:
-            factors.append(i)
-            factors.append(num / i)
-    return set([factor for factor in factors if is_prime(factor)])
+    """Returns a set of prime factors."""
+    return set([factor for factor in generate_factors(num) if is_prime(factor)])
 
 
 def get_primes(upper_bound: int) -> List[int]:

@@ -19,6 +19,7 @@ def test_not_is_prime(num: int):
 
 
 @pytest.mark.parametrize('num, correct_factors', [
+    (28, [2, 7]),
     (39, [3, 13]),
     (13195, [5, 7, 13, 29]),
     (111111, [3, 7, 11, 13, 37]),
