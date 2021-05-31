@@ -1,3 +1,4 @@
+from functools import reduce
 from math import log, sqrt
 from typing import List, Tuple
 
@@ -104,3 +105,9 @@ class LargeNumberSumUtils:
 
 def large_number_sum(a: str, b: str, word_size: int = 32) -> str:
     return LargeNumberSumUtils.large_number_sum(a, b, word_size)
+
+
+def num_combinations(n: int, r: int) -> int:
+    numerator = reduce(lambda a, b: a * b, range(n-r+1, n+1))
+    denominator = reduce(lambda a, b: a * b, range(1, r+1))
+    return int(numerator / denominator)
