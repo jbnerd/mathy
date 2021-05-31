@@ -53,3 +53,35 @@ class PrimeNumberSequenceGenerator:
                 for j in range(2*i*(i+1), sieve_bound + 1, 2*i+1):
                     sieve[j] = False
         return [2] + [2*i+1 for i, _ in enumerate(sieve) if sieve[i]][1:]
+
+
+class CollatzSequenceGenerator:
+    """Produces a collatz sequence until the end given a starting number."""
+
+    @classmethod
+    def generate(cls, num: int) -> List[int]:
+        sequence = [num]
+        while num != 1:
+            num = int(num / 2) if num % 2 == 0 else 3*num + 1
+            sequence.append(num)
+        return sequence
+
+    @classmethod
+    def longest_sequence_seed(cls, upper_bound: int) -> int:
+        seq_len = {1: 1}
+        max_count, max_count_seed = 1, 1
+        for i in range(1, upper_bound + 1):
+            count, num, sequence = 1, i, [i]
+            while num != 1:
+                if num in seq_len:
+                    count += seq_len[num]
+                    break
+                else:
+                    count += 1
+                    num = int(num / 2) if num % 2 == 0 else 3 * num + 1
+                    sequence.append(num)
+            max_count, max_count_seed = (count, i) if max_count < count else (max_count, max_count_seed)
+            for item in sequence:
+                seq_len[item] = count
+                count -= 1
+        return max_count_seed
