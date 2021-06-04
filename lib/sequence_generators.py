@@ -1,30 +1,47 @@
 from math import sqrt
 
-from typing import List, Iterable
+from typing import Iterable, List, Optional
 
 
 class FibonacciSequenceGenerator:
+    OptionalIntArg = Optional[int]
+
     def __init__(self, first: int, second: int):
+        self._seed_checks(first, second)
         self.first = first
         self.second = second
 
-    def generate(self, upper_bound: int = 0, num_terms: int = 0) -> List[int]:
-        """Generates the Fibonacci sequence starting from first and second.
+    @staticmethod
+    def _seed_checks(first: int, second: int):
+        if first < 0 or second < 0:
+            raise ValueError("Provide non-negative seeds.")
 
-        upper_bound is exclusive
+    def generate(self, upper_bound: OptionalIntArg = None, num_terms: OptionalIntArg = None) -> List[int]:
         """
+        Generates the Fibonacci sequence starting from first and second.
+        Note: upper_bound is excluded.
+        """
+        self._stop_condition_checks(upper_bound, num_terms)
         sequence = []
         for i, next_term in enumerate(self._next_num()):
-            if upper_bound == 0 and num_terms == 0:
-                raise ValueError("Either provide a positive upper_bound for the sequence or the (positive) num_terms "
-                                 "to be generated.")
-            if 0 < upper_bound <= next_term:
+            if upper_bound is not None and 0 <= upper_bound <= next_term:
                 break
-            elif 0 < num_terms <= i:
+            elif num_terms is not None and 0 <= num_terms <= i:
                 break
             else:
                 sequence.append(next_term)
         return sequence
+
+    @staticmethod
+    def _stop_condition_checks(upper_bound: OptionalIntArg, num_terms: OptionalIntArg):
+        if upper_bound is None and num_terms is None:
+            raise ValueError("Provide appropriate value for one of upper_bound or num_terms.")
+        elif upper_bound is not None and num_terms is not None:
+            raise ValueError("Provide appropriate value for only one of upper_bound or num_terms.")
+        elif upper_bound is not None and upper_bound < 0:
+            raise ValueError("Provide non-negative upper_bound.")
+        elif num_terms is not None and num_terms < 0:
+            raise ValueError("Provide non-negative num_terms.")
 
     def _next_num(self) -> Iterable[int]:
         first, second, i = self.first, self.second, 1
