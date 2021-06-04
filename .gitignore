@@ -4,5 +4,6 @@
 # Python cache
 **/__pycache__/*
 
-# Pytest cache
+# Pytest cache and settings
 */.pytest_cache
+.coverage
