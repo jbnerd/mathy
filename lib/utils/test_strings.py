@@ -13,5 +13,5 @@ def test_is_palindrome(palindrome):
 @pytest.mark.parametrize("non_palindrome", [
     10, 193401
 ])
-def test_is_palindrome_not_palindrome(non_palindrome):
+def test_not_is_palindrome(non_palindrome):
     assert not is_palindrome_number(non_palindrome)

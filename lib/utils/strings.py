@@ -1,3 +1,7 @@
+"""
+This file provides utilities for operations on numbers represented as strings.
+"""
+
 import functools
 
 
