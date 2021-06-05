@@ -1,8 +1,8 @@
-"""Plan of attack:
-    v1: (0.000028 seconds)
-        Generate every Fibonacci number up until the given limit and add all the even occurrences.
-    v2: (0.000025 seconds)
-        Avoid testing for even numbers by observing that every 3rd number in the sequence is even.
+"""
+Average execution times:
+    v1: 0.000028 seconds
+    v2: 0.000025 seconds
+Answer: 4613732
 """
 import sys
 
@@ -16,14 +16,16 @@ def generate_numbers():
     return generator.generate(4000000)
 
 
-@Timer(name='decorator')
+@Timer()
 def execute_v1():
+    """Generate every Fibonacci number up until the given limit and add all the even occurrences."""
     fib_seq = generate_numbers()
     print(sum([i for i in fib_seq if i % 2 == 0]))
 
 
-@Timer(name='decorator')
+@Timer()
 def execute_v2():
+    """Avoid testing for even numbers by observing that every 3rd number in the sequence is even."""
     fib_seq = generate_numbers()
     print(sum(fib_seq[1::3]))
 
