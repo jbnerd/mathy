@@ -19,7 +19,7 @@ from functools import reduce
 import _init_paths
 from lib.utils.generic import Timer
 from lib.utils.numeric import sum_of_natural_numbers, get_factors
-from lib.utils.primes import get_primes, PrimeFactors
+from lib.utils.primes import prime_factorization
 
 
 @Timer(name='decorator')
@@ -33,19 +33,18 @@ def execute_v1():
         i += 1
 
 
-def total_divisors(num, prime_table):
-    factors, exponents = PrimeFactors.prime_factorization(num, prime_table)
+def total_divisors(num):
+    factors, exponents = prime_factorization(num)
     exponents = [exp + 1 for exp in exponents]
     return reduce(lambda a, b: a * b, exponents)
 
 
 @Timer(name='decorator')
 def execute_v2():
-    prime_table = get_primes(65500)
     i = 4
     while True:
         triangular_num = sum_of_natural_numbers(i)
-        if total_divisors(triangular_num, prime_table) > 500:
+        if total_divisors(triangular_num) > 500:
             print(triangular_num)
             break
         i += 1
@@ -53,13 +52,12 @@ def execute_v2():
 
 @Timer(name='decorator')
 def execute_v3():
-    prime_table = get_primes(1000)
     n = 3
     while True:
         if n % 2 == 0:
-            num_divisors = total_divisors(n/2, prime_table) * total_divisors(n+1, prime_table)
+            num_divisors = total_divisors(n / 2) * total_divisors(n + 1)
         else:
-            num_divisors = total_divisors((n+1)/2, prime_table) * total_divisors(n, prime_table)
+            num_divisors = total_divisors((n+1) / 2) * total_divisors(n)
         if num_divisors > 500:
             print(int(n * (n+1) / 2))
             break

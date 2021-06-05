@@ -4,21 +4,29 @@ from typing import List, Tuple
 from lib.sequence_generators import PrimeNumberSequenceGenerator
 
 
-class PrimeFactors:
+class PrimeFactorizationHelper:
     """Utilities related to prime factors and prime factorization of numbers."""
 
-    @classmethod
-    def get_prime_factors(cls, num: int) -> List[int]:
-        """Returns a list of prime factors."""
-        return cls.prime_factorization(num)[0]
+    _primes: List[int] = []
+    curr_upper_bound: int = -1
 
     @classmethod
-    def prime_factorization(cls, num: int, primes: List[int] = None) -> Tuple[List[int], List[int]]:
-        if primes is None:
-            primes = cls._prepare_prime_table(num)
+    def update_prime_cache(cls, upper_bound: int):
+        cls.curr_upper_bound = upper_bound
+        cls._primes = cls._prepare_prime_table(upper_bound)
+
+    @staticmethod
+    def _prepare_prime_table(num: int) -> List[int]:
+        upper_bound = int(sqrt(num) + 1)
+        return PrimeNumberSequenceGenerator.generate(upper_bound)
+
+    @classmethod
+    def prime_factorization(cls, num: int) -> Tuple[List[int], List[int]]:
+        if cls.curr_upper_bound < int(sqrt(num) + 1):
+            cls._primes = cls._prepare_prime_table(num)
 
         factors, exponents, limit = [], [], sqrt(num)
-        for prime in primes:
+        for prime in cls._primes:
             if prime >= sqrt(num):
                 break
             exponent = 0
@@ -35,10 +43,16 @@ class PrimeFactors:
 
         return factors, exponents
 
-    @staticmethod
-    def _prepare_prime_table(num: int) -> List[int]:
-        upper_bound = int(sqrt(num) + 1)
-        return get_primes(upper_bound)
+
+def prime_factorization(num: int) -> Tuple[List[int], List[int]]:
+    """A safe upper bound for the cache of prime numbers to factorize a 32-bit integer is 2^16."""
+    if PrimeFactorizationHelper.curr_upper_bound < 0:
+        PrimeFactorizationHelper.update_prime_cache(2 ** 16)
+    return PrimeFactorizationHelper.prime_factorization(num)
+
+
+def prime_factors(num: int) -> List[int]:
+    return prime_factorization(num)[0]
 
 
 def is_prime(num: int) -> bool:
