@@ -1,6 +1,7 @@
-"""Plan of attack:
-    v1: (0.117498 seconds)
-        Generate the primes using sieve and add.
+"""
+Average execution times:
+    v1: 0.117498 seconds
+Answer: 142913828922
 """
 from functools import reduce
 
@@ -11,6 +12,7 @@ from lib.utils.primes import get_primes
 
 @Timer(name='decorator')
 def execute_v1():
+    """Generate the primes using sieve and add."""
     print(reduce(lambda a, b: a + b, get_primes(2000000)))
 
 
