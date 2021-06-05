@@ -63,6 +63,8 @@ class PrimeNumberSequenceGenerator:
     @classmethod
     def generate(cls, upper_bound: int) -> List[int]:
         """upper_bound is inclusive."""
+        if upper_bound < 2:
+            return []
         sieve_bound, cross_limit = int((upper_bound - 1) / 2), int((int(sqrt(upper_bound)) - 1) / 2)
         sieve = [True for _ in range(sieve_bound + 1)]
         for i in range(1, cross_limit + 1):

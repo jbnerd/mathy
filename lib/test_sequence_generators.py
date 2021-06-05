@@ -73,16 +73,25 @@ def test_fib_seq_generator_given_both_upper_bound_and_num_terms(upper_bound, num
         assert str(exc.value) == "Provide appropriate value for only one of upper_bound or num_terms."
 
 
+@pytest.fixture()
+def first_two_hundred_thousand_primes():
+    with open('lib/test_data/first_two_hundred_thousand_primes.txt') as infile:
+        data = infile.read().strip().split('\n')
+    return list(map(int, data))
+
+
 @pytest.mark.parametrize('upper_bound, correct_primes', [
-    (10, [2, 3, 5, 7]),
-    (100, [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]),
-    (541, [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103,
-           107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227,
-           229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353,
-           359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487,
-           491, 499, 503, 509, 521, 523, 541])  # First 100 primes
+    (-1, 'first_two_hundred_thousand_primes'),
+    (1, 'first_two_hundred_thousand_primes'),
+    (2, 'first_two_hundred_thousand_primes'),
+    (10, 'first_two_hundred_thousand_primes'),
+    (100, 'first_two_hundred_thousand_primes'),
+    (541, 'first_two_hundred_thousand_primes'),
+    (2000000, 'first_two_hundred_thousand_primes')
 ])
-def test_prime_seq_generator(upper_bound, correct_primes):
+def test_prime_seq_generator(upper_bound, correct_primes, request):
+    correct_primes = request.getfixturevalue(correct_primes)
+    correct_primes = [item for item in correct_primes if item <= upper_bound]
     predicted_primes = PrimeNumberSequenceGenerator.generate(upper_bound)
     assert predicted_primes == correct_primes
 
