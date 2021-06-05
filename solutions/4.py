@@ -1,19 +1,14 @@
-"""Plan of attack:
-    v1: (0.299868 seconds)
-        The problem can essentially be solved using a search on the search space. The most obvious search method is to
-        use brute force. 111111 = 143 * 777 can be used as the baseline number because it is a known palindromic number
-        with two three-digit factors.
-    v2: (0.152263 seconds)
-        To avoid double checks, we can add a restriction that one of the factors must be greater than or equal to the
-        other factor.
-    v3: (0.001408 seconds)
-        Alternatively, we can start searching the factors from largest candidate value to smallest instead of the other
-        way round. This will ensure that the largest palindromic number is found early and as soon as a candidate
-        product is less than the current palindromic candidate, we can preempt the search for the second factor.
-    v4: (0.000501 seconds)
-        Let the largest number we have to find be P. P must be 6 digit because 111111 is the baseline.
-        P = 100000x + 10000y + 1000z + 100z + 10y + x = 11 * (9091x + 910y + 100z)
-        Therefore at least one of the factors of P must be divisible by 11. We can exploit this fact in our search.
+"""
+Average execution times:
+    v1: (0.296354 seconds)
+    v2: (0.147609 seconds)
+    v3: (0.001563 seconds)
+    v4: (0.000402 seconds)
+Answer: 906609
+
+The problem is solved by searching on the appropriate search  space. For example 111111 = 143 * 777 is one of the first
+palindromic number that comes to mind and has two three-digit factors. Hence, it can be used as a baseline number for
+searching a larger number.
 """
 import sys
 
@@ -22,8 +17,9 @@ from lib.utils.strings import is_palindrome_number
 from lib.utils.generic import Timer
 
 
-@Timer(name='decorator')
+@Timer()
 def execute_v1():
+    """Brute force search against the established baseline."""
     max_palindrome = 111111
     for i in range(100, 1000):
         for j in range(100, 1000):
@@ -33,8 +29,12 @@ def execute_v1():
     print(max_palindrome)
 
 
-@Timer(name='decorator')
+@Timer()
 def execute_v2():
+    """
+    To avoid checking a case twice, a restriction that one of the factors must be greater than or equal to the other
+    factor is added - effectively reducing the search space by half.
+    """
     max_palindrome = 111111
     for i in range(100, 1000):
         for j in range(i, 1000):
@@ -44,8 +44,13 @@ def execute_v2():
     print(max_palindrome)
 
 
-@Timer(name='decorator')
+@Timer()
 def execute_v3():
+    """
+    Instead of searching the candidates from the small to large, the loop can be reversed to find the desired number
+    early. The search is pruned by preempting the search for the second factor as soon as the generated candidate gets
+    smaller than the available max_palindrome.
+    """
     max_palindrome = 111111
     for i in range(1000, 100, -1):
         for j in range(1000, i, -1):
@@ -57,8 +62,15 @@ def execute_v3():
     print(max_palindrome)
 
 
-@Timer(name='decorator')
+@Timer()
 def execute_v4():
+    """
+    Let the largest number we have to find be P. P must be 6 digit because 111111 is the baseline and P must be greater
+    than the baseline. Thus,
+        P = 100000x + 10000y + 1000z + 100z + 10y + x = 11 * (9091x + 910y + 100z)
+    Since P is divisible by 11, at least one of the factors of P must be divisible by 11. This fact is leveraged to
+    prune the search space even further.
+    """
     max_palindrome = 111111
     a = 999
     while a >= 100:
