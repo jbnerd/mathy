@@ -1,6 +1,7 @@
-"""Plan of attack:
+"""
+Average execution times:
     v1: (0.001243 seconds)
-        Iterate over valid elements and compute the product 4-element wise.
+Answer: 70600674
 """
 from functools import reduce
 
@@ -32,8 +33,9 @@ def left_down_prod(data, i, j):
     return reduce(lambda a, b: a * b, [data[i+k][j-k] for k in range(4)])
 
 
-@Timer(name='decorator')
+@Timer()
 def execute_v1():
+    """Iterate over valid elements and compute the product 4-element wise."""
     data = read_data()
     max_prod = 0
     for i in range(17):
