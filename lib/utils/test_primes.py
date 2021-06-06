@@ -2,7 +2,7 @@ from typing import List
 
 import pytest
 
-from lib.utils.primes import is_prime, get_nth_prime, prime_factors, prime_factorization
+from lib.utils.primes import is_prime, nth_prime, prime_factors, prime_factorization
 
 
 @pytest.mark.parametrize('num', [
@@ -20,11 +20,20 @@ def test_not_is_prime(num: int):
 
 
 @pytest.mark.parametrize('n, prime', [
-    (6, 13),
-    (100, 541)
+    (1, 2),
+    (10, 29),
+    (100, 541),
+    (10000, 104729),
+    (200000, 2750159)
 ])
-def test_get_nth_prime(n, prime):
-    assert prime == get_nth_prime(n)
+def test_nth_prime(n, prime):
+    assert prime == nth_prime(n)
+
+
+def test_nth_prime_given_negative_n():
+    with pytest.raises(ValueError) as exc:
+        _ = nth_prime(-1)
+    assert str(exc.value) == "Provide a positive number."
 
 
 @pytest.mark.parametrize('n, correct_factors, correct_exponents', [
