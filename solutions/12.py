@@ -1,17 +1,9 @@
-"""Plan of attack:
+"""
+Average execution times:
     v1: (2.416296 seconds)
-        Generate triangular numbers using the sum of natural numbers formula and check the first number that has more
-        than 500 divisors.
-    v2: (0.119317 seconds)
-        When the prime factorization of a number is produced the total number of divisors are given by
-        D(num) = (a_1 + 1) * (a_2 + 1) * (a_3 + 1) ... (a_k + 1) where a_i's are the exponents of the prime factors.
-        The required number is expected to be stored in a 32-bit integer, hence a list of prime numbers up to 65500
-        should be sufficient to construct the prime factorization of triangular numbers in the search space.
-    v3: (0.056504 seconds)
-        Since a triangular number is given by n * (n + 1) / 2 and since n, (n + 1) must be co-primes:
-        D(num) = D(n/2) * D(n+1) if n is even
-               = D(n) * D((n+1)/2) otherwise.
-        In this case the prime table constructed up to 1000 is sufficient.
+    v2: (0.173168 seconds)
+    v3: (0.089309 seconds)
+Answer: 76576500
 """
 import sys
 from functools import reduce
@@ -24,6 +16,7 @@ from lib.utils.primes import prime_factorization
 
 @Timer(name='decorator')
 def execute_v1():
+    """Brute force approach - triangular numbers are generated using the formula."""
     i = 1
     while True:
         triangular_num = sum_of_natural_numbers(i)
@@ -39,8 +32,12 @@ def total_divisors(num):
     return reduce(lambda a, b: a * b, exponents)
 
 
-@Timer(name='decorator')
+@Timer()
 def execute_v2():
+    """
+    Let the prime factorization of a number, pf(n) = p_1^a_1 * p_2^a_2 * ... * p_k^a_k. Then the total number of
+    divisors D(n) = (a_1 + 1) * (a_2 + 1) * ... * (a_k + 1).
+    """
     i = 4
     while True:
         triangular_num = sum_of_natural_numbers(i)
@@ -50,8 +47,13 @@ def execute_v2():
         i += 1
 
 
-@Timer(name='decorator')
+@Timer()
 def execute_v3():
+    """
+    Since a triangular number is given by n * (n + 1) / 2 and since n, (n + 1) must be co-primes:
+        D(num) = D(n/2) * D(n+1) if n is even
+               = D(n) * D((n+1)/2) otherwise.
+    """
     n = 3
     while True:
         if n % 2 == 0:
