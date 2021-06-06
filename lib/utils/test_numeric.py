@@ -92,3 +92,9 @@ def test_least_common_multiple_of_natural_numbers_given_negative_number():
 def test_get_factors(num, factors):
     predicted_factors = get_factors(num)
     assert predicted_factors == factors
+
+
+def test_get_factors_given_negative_number():
+    with pytest.raises(ValueError) as exc:
+        _ = get_factors(-1)
+    assert str(exc.value) == "Provide a natural number."
