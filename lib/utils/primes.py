@@ -16,12 +16,7 @@ class PrimeFactorizationHelper:
     @classmethod
     def update_prime_cache(cls, upper_bound: int):
         cls.curr_upper_bound = upper_bound
-        cls._prepare_prime_cache(upper_bound)
-
-    @classmethod
-    def _prepare_prime_cache(cls, num: int):
-        cls.curr_upper_bound = int(sqrt(num) + 1)
-        cls._primes = PrimeNumberSequenceGenerator.generate(cls.curr_upper_bound)
+        cls._primes = PrimeNumberSequenceGenerator.generate(upper_bound)
 
     @classmethod
     def prime_factorization(cls, num: int) -> Tuple[List[int], List[int]]:
@@ -30,27 +25,19 @@ class PrimeFactorizationHelper:
         root of the number.
         """
         if cls.curr_upper_bound < int(sqrt(num) + 1):
-            cls._prepare_prime_cache(num)
+            cls.update_prime_cache(int(sqrt(num) + 1))
 
-        factors, exponents, limit = [], [], sqrt(num)
+        exponents = []
         for prime in cls._primes:
-            if prime > limit:
-                if num != 1:
-                    factors.append(int(num))
-                    exponents.append(1)
+            if prime > sqrt(num):
                 break
-            num, exponent = cls._process_one_iteration(num, prime)
-            if exponent != 0:
-                factors.append(prime)
-                exponents.append(exponent)
-        return factors, exponents
-
-    @staticmethod
-    def _process_one_iteration(num: int, prime: int) -> Tuple[int, int]:
-        exponent = 0
-        while num % prime == 0:
-            exponent, num = exponent + 1, num / prime
-        return num, exponent
+            exponent = 0
+            while num % prime == 0:
+                exponent, num = exponent + 1, num / prime
+            exponents.append(exponent)
+        factors = [prime for prime, exponent in zip(cls._primes, exponents) if exponent != 0]
+        exponents = [exponent for exponent in exponents if exponent != 0]
+        return (factors + [int(num)], exponents + [1]) if num != 1 else (factors, exponents)
 
 
 def prime_factorization(num: int) -> Tuple[List[int], List[int]]:
