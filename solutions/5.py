@@ -1,11 +1,8 @@
-"""Plan of attack:
-    v1: (0.000051 seconds)
-        The question essentially asks you to compute the least common multiple (LCM) of the given list of numbers. LCM
-        can be computed by having the list of collective prime factors of the set and their corresponding frequencies.
-        Prime numbers can be computed efficiently with the Sieve of Eratosthenes. Frequencies need not be computed,
-        instead the prime numbers can be used as taught in the primary grade LCM computation procedure.
+"""
+Average execution times:
+    v1: (0.000080 seconds)
     v2: (0.000030 seconds)
-        Optimized method of computing LCM for first N natural numbers.
+Answer: 232792560
 """
 import sys
 
@@ -14,13 +11,18 @@ from lib.utils.numeric import least_common_multiple, least_common_multiple_of_na
 from lib.utils.generic import Timer
 
 
-@Timer(name='decorator')
+@Timer()
 def execute_v1():
+    """
+    LCM of natural numbers is computed by creating an appropriate cache of prime numbers. The cache is used to compute
+    the highest power of the prime that is present as a factor of all numbers in the list.
+    """
     print(least_common_multiple([i for i in range(1, 21)]))
 
 
-@Timer(name='decorator')
+@Timer()
 def execute_v2():
+    """Presence of all natural numbers up till n is leveraged by directly computing the largest exponent."""
     print(least_common_multiple_of_natural_numbers(20))
 
 
