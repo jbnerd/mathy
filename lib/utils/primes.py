@@ -85,12 +85,12 @@ def get_primes(upper_bound: int) -> List[int]:
     return PrimeNumberSequenceGenerator.generate(upper_bound)
 
 
-def get_nth_prime(n: int) -> int:
+def nth_prime(n: int) -> int:
     """One of the upper bounds on nth prime number is given by n(log(n) + log(log(n))) for all n >= 6"""
     if n < 1:
-        raise ValueError('0th or negative prime is not possible. Enter a positive number.')
+        raise ValueError("Provide a positive number.")
     elif 1 <= n <= 6:
         return [2, 3, 5, 7, 11, 13][n - 1]
     else:
         upper_bound = ceil(n * (log(n) + log(log(n))))
-        return get_primes(upper_bound)[n - 1]
+        return PrimeNumberSequenceGenerator.generate(upper_bound)[n - 1]

@@ -1,15 +1,17 @@
-"""Plan of attack:
+"""
+Average execution times:
     v1: (0.006092 seconds)
-        The upper bound of nth prime is given by n(logn + loglogn) for all n >= 6.
+Answer: 2000000
 """
 import _init_paths
-from lib.utils.primes import get_nth_prime
+from lib.utils.primes import nth_prime
 from lib.utils.generic import Timer
 
 
-@Timer(name='decorator')
+@Timer()
 def execute_v1():
-    print(get_nth_prime(10001))
+    """The upper bound of nth prime is given by n(logn + loglogn) for all n >= 6."""
+    print(nth_prime(10001))
 
 
 if __name__ == "__main__":
