@@ -10,7 +10,7 @@
 import sys
 
 import _init_paths
-from lib.utils.numeric import least_common_multiple, least_common_multiple_first_n_natural_numbers
+from lib.utils.numeric import least_common_multiple, least_common_multiple_of_natural_numbers
 from lib.utils.generic import Timer
 
 
@@ -21,7 +21,7 @@ def execute_v1():
 
 @Timer(name='decorator')
 def execute_v2():
-    print(least_common_multiple_first_n_natural_numbers(20))
+    print(least_common_multiple_of_natural_numbers(20))
 
 
 if __name__ == "__main__":

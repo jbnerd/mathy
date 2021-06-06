@@ -2,44 +2,46 @@ from functools import reduce
 from math import log, sqrt
 from typing import List, Tuple
 
-from lib.utils.primes import get_primes
+from lib.sequence_generators import PrimeNumberSequenceGenerator
 
 
 def sum_of_natural_numbers(n: int) -> int:
+    if n < 0:
+        raise ValueError("Provide a non-negative natural number.")
     return int(n * (n + 1) / 2)
 
 
 def sum_of_squares_of_natural_numbers(n: int) -> int:
+    if n < 0:
+        raise ValueError("Provide a non-negative natural number.")
     return int(n * (n + 1) * (2 * n + 1) / 6)
 
 
 def least_common_multiple(numbers: List[int]) -> int:
-    primes, lcm = get_primes(max(numbers)), 1
+    if any([number <= 0 for number in numbers]):
+        raise ValueError("Provide positive integers only.")
+    primes, lcm = PrimeNumberSequenceGenerator.generate(max(numbers)), 1
     for prime in primes:
-        exhausted = False
-        while not exhausted:
-            exhausted = True
-            for i, number in enumerate(numbers):
-                if number % prime == 0:
-                    numbers[i] /= prime
-                    exhausted = False
-            if not exhausted:
-                numbers = [number for number in numbers if number != 1]
-                lcm *= prime
+        if not any([number != 1 for number in numbers]):
+            break
+        while any([number % prime == 0 for number in numbers]):
+            lcm *= prime
+            numbers = [number / prime if number % prime == 0 else number for number in numbers]
     return lcm
 
 
-def least_common_multiple_first_n_natural_numbers(upper_bound: int) -> int:
-    """ The exponent of a prime number in the prime factorization of the LCM is its greatest perfect power less than the
-        upper bound. For example power of 2 in LCM(1...20) is 4 = log(16, 2). We can further observe that the exponent
-        of a prime number greater than sqrt(upper_bound) is 1.
-
-        upper_bound is inclusive
+def least_common_multiple_of_natural_numbers(n: int) -> int:
     """
-    lcm, limit = 1, sqrt(upper_bound)
-    primes = get_primes(upper_bound)
+    Let the least common multiple of first n natural numbers be denoted by LCM(n). The exponent of any prime number in
+    the prime factorization of LCM(n) is its greatest perfect power less than n. For example, the power of 2 in LCM(20)
+    is 4 = log(16) / log(2).
+    """
+    if n <= 0:
+        raise ValueError("Provide positive integers only.")
+    lcm, limit = 1, sqrt(n)
+    primes = PrimeNumberSequenceGenerator.generate(n)
     for prime in primes:
-        exponent = int(log(upper_bound) / log(prime)) if prime <= limit else 1
+        exponent = int(log(n) / log(prime))
         lcm *= prime ** exponent
     return lcm
 
