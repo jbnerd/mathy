@@ -81,10 +81,6 @@ def is_prime(num: int) -> bool:
         return True
 
 
-def get_primes(upper_bound: int) -> List[int]:
-    return PrimeNumberSequenceGenerator.generate(upper_bound)
-
-
 def nth_prime(n: int) -> int:
     """One of the upper bounds on nth prime number is given by n(log(n) + log(log(n))) for all n >= 6"""
     if n < 1:
