@@ -48,6 +48,8 @@ def least_common_multiple_of_natural_numbers(n: int) -> int:
 
 def get_factors(num: int) -> List[int]:
     """Returns a sorted list of proper factors."""
+    if num < 0:
+        raise ValueError("Provide a natural number.")
     upper_bound = int(sqrt(num))
     factors = set()
     for i in range(2, upper_bound + 1):
