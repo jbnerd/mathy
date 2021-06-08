@@ -59,33 +59,43 @@ def get_factors(num: int) -> List[int]:
     return sorted(list(factors))
 
 
-class LargeNumberSumUtils:
+class LargeNumberSumHelper:
     """Logic for computing sums of large numbers."""
 
     @classmethod
     def large_number_sum(cls, a: str, b: str, word_size: int = 32) -> str:
-        """Returns the sum of two large numbers in string format.
-            word_size is the number of bits upon which the processor can perform an add operation in one clock cycle.
         """
+        Returns the sum of two large numbers a and b represented as strings.
+        word_size is the word size of the register that the computer uses.
+        """
+        chunk_size = cls._get_chunk_size(word_size)
+        a, b = cls._adjust_lens(a, b)
+        a, b = cls._pad_split_and_reverse(a, chunk_size), cls._pad_split_and_reverse(b, chunk_size)
+        c, carry, mod = [], 0, 10 ** chunk_size
+        for chunk1, chunk2 in zip(a, b):
+            total, carry = cls._add_chunks(chunk1, chunk2, carry, chunk_size, mod)
+            c.append(total)
+        c = ''.join(c[::-1])
+        return (str(carry) + c).lstrip('0')
+
+    @staticmethod
+    def _get_chunk_size(word_size: int) -> int:
         word_size_to_len_str_map = {8: 2, 16: 4, 24: 6, 32: 9, 64: 19}
         try:
             chunk_size = word_size_to_len_str_map[word_size]
         except KeyError:
-            raise ValueError('Provide the word_size from the following list [16, 32, 64]')
-        a, b = cls.pad_split_and_reverse(a, chunk_size), cls.pad_split_and_reverse(b, chunk_size)
-        a, b = cls._adjust_lens(a, b, chunk_size)
-        c, carry, mod = [], 0, 10 ** chunk_size
-        for chunk1, chunk2 in zip(a, b):
-            temp_sum = int(chunk1) + int(chunk2) + carry
-            c.append(str(temp_sum % mod).zfill(chunk_size))
-            carry = int(temp_sum / mod)
-        c = ''.join(c[::-1])
-        return str(carry) + c.lstrip('0') if carry != 0 else c.lstrip('0')
+            raise ValueError("Provide the word_size from the following list [16, 32, 64]")
+        return chunk_size
+
+    @staticmethod
+    def _adjust_lens(a: str, b: str) -> Tuple[str, str]:
+        return (a, b.zfill(len(a))) if len(a) > len(b) else (a.zfill(len(b)), b)
 
     @classmethod
-    def pad_split_and_reverse(cls, num: str, chunk_size: int) -> List[str]:
-        """Pads the given string in the beginning to target_len with zeroes and splits the string in chunks each of
-            size str_word_size.
+    def _pad_split_and_reverse(cls, num: str, chunk_size: int) -> List[str]:
+        """
+        Pads the given string in the beginning to target_len with zeroes and splits the string in chunks each of size
+        chunk_size.
         """
         target_len = cls._compute_target_len(len(num), chunk_size)
         num = num.zfill(target_len)
@@ -98,17 +108,15 @@ class LargeNumberSumUtils:
         return (quotient + 1) * chunk_size
 
     @staticmethod
-    def _adjust_lens(a: List[str], b: List[str], chunk_size: int) -> Tuple[List[str], List[str]]:
-        appendage = [chunk_size * '0']
-        if len(a) > len(b):
-            b = b + (len(a) - len(b)) * appendage
-        elif len(a) < len(b):
-            a = a + (len(b) - len(a)) * appendage
-        return a, b
+    def _add_chunks(chunk_a: str, chunk_b: str, carry: int, chunk_size: int, mod: int) -> Tuple[str, int]:
+        temp_total = int(chunk_a) + int(chunk_b) + carry
+        total = str(temp_total % mod).zfill(chunk_size)
+        carry = int(temp_total / mod)
+        return total, carry
 
 
 def large_number_sum(a: str, b: str, word_size: int = 32) -> str:
-    return LargeNumberSumUtils.large_number_sum(a, b, word_size)
+    return LargeNumberSumHelper.large_number_sum(a, b, word_size)
 
 
 def num_combinations(n: int, r: int) -> int:
