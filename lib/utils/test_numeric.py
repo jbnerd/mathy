@@ -1,9 +1,11 @@
+from functools import reduce
 from typing import List
+
 import pytest
 
-from lib.utils.numeric import sum_of_natural_numbers, sum_of_squares_of_natural_numbers, least_common_multiple,\
-    least_common_multiple_of_natural_numbers
 from lib.utils.numeric import get_factors
+from lib.utils.numeric import sum_of_natural_numbers, sum_of_squares_of_natural_numbers, least_common_multiple, \
+    least_common_multiple_of_natural_numbers, large_number_sum
 
 
 @pytest.mark.parametrize('num, correct_sum', [
@@ -98,3 +100,28 @@ def test_get_factors_given_negative_number():
     with pytest.raises(ValueError) as exc:
         _ = get_factors(-1)
     assert str(exc.value) == "Provide a natural number."
+
+
+@pytest.fixture()
+def large_number_sum_data():
+    with open('lib/test_data/50_large_numbers.txt') as infile:
+        data = infile.read().strip().split('\n')
+    return data
+
+
+@pytest.mark.parametrize('data, correct_total', [
+    ['large_number_sum_data', '5537376230390876637302048746832985971773659831892672']
+])
+def test_large_number_sum(data, correct_total, request):
+    data = request.getfixturevalue(data)
+    predicted_total = reduce(lambda a, b: large_number_sum(a, b, 64), data)
+    assert predicted_total == correct_total
+
+
+@pytest.mark.parametrize('chunk_size', [
+    10, 20, 30, 40, 50
+])
+def test_large_number_sum_wrong_chunk_size(chunk_size):
+    with pytest.raises(ValueError) as exc:
+        _ = large_number_sum('111111111111', '222222222222', chunk_size)
+    assert str(exc.value) == "Provide the word_size from the following list [16, 32, 64]"
