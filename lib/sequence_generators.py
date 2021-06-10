@@ -1,6 +1,6 @@
 from math import sqrt
 
-from typing import Iterable, List, Optional
+from typing import Dict, Iterable, List, Optional
 
 
 class FibonacciSequenceGenerator:
@@ -87,6 +87,8 @@ class PrimeNumberSequenceGenerator:
 class CollatzSequenceGenerator:
     """Produces a collatz sequence until the end given a starting number."""
 
+    _seq_len: Dict[int, int] = {1: 1}
+
     @classmethod
     def generate(cls, num: int) -> List[int]:
         sequence = [num]
@@ -97,20 +99,24 @@ class CollatzSequenceGenerator:
 
     @classmethod
     def longest_sequence_seed(cls, upper_bound: int) -> int:
-        seq_len = {1: 1}
+        """Solutions to repeating sub-problems are memoized in cls._seq_len"""
         max_count, max_count_seed = 1, 1
         for i in range(1, upper_bound + 1):
-            count, num, sequence = 1, i, [i]
-            while num != 1:
-                if num in seq_len:
-                    count += seq_len[num]
-                    break
-                else:
-                    count += 1
-                    num = int(num / 2) if num % 2 == 0 else 3 * num + 1
-                    sequence.append(num)
+            count = cls._count_num_steps(i)
             max_count, max_count_seed = (count, i) if max_count < count else (max_count, max_count_seed)
-            for item in sequence:
-                seq_len[item] = count
-                count -= 1
         return max_count_seed
+
+    @classmethod
+    def _count_num_steps(cls, num: int) -> int:
+        count, sequence = 1, [num]
+        while num != 1:
+            if num in cls._seq_len:
+                count += cls._seq_len[num]
+                break
+            else:
+                num = int(num / 2) if num % 2 == 0 else 3 * num + 1
+                sequence.append(num)
+                count += 1
+        for i, item in enumerate(sequence):
+            cls._seq_len[item] = count - i
+        return count
