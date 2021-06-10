@@ -1,6 +1,7 @@
-"""Plan of attack:
+"""
+Average execution times:
     v1: (1.078704 seconds)
-        Use memoization to optimize the count of longest collatz sequence.
+Answer: 837799
 """
 import _init_paths
 from lib.utils.generic import Timer
