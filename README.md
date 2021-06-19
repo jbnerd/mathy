@@ -20,3 +20,4 @@ solved with problem names and links for navigability.
 - [X] 13: [Large sum](https://projecteuler.net/problem=13)
 - [X] 14: [Longest Collatz sequence](https://projecteuler.net/problem=14)
 - [X] 15: [Lattice paths](https://projecteuler.net/problem=15)
+- [X] 16: [Power digit sum](https://projecteuler.net/problem=16)
