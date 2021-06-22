@@ -67,12 +67,13 @@ class LargeNumbersHelper:
     """
 
     @classmethod
-    def large_number_sum(cls, a: str, b: str, word_size: int = 32) -> str:
+    def large_number_sum(cls, a: str, b: str) -> str:
         """
         Returns the sum of two large numbers a and b represented as strings.
-        word_size is the word size of the register that the computer uses.
+        Word size of the machine's register is assumed to be 64 bits.
+        For 64-bit registers the safe number of digits in an integer is 18.
         """
-        chunk_size = cls._get_chunk_size(word_size)
+        chunk_size = 18
         a, b = cls._adjust_lens(a, b)
         a, b = cls._pad_split_and_reverse(a, chunk_size), cls._pad_split_and_reverse(b, chunk_size)
         c, carry, mod = [], 0, 10 ** chunk_size
@@ -81,19 +82,6 @@ class LargeNumbersHelper:
             c.append(total)
         c = ''.join(c[::-1])
         return (str(carry) + c).lstrip('0')
-
-    @staticmethod
-    def _get_chunk_size(word_size: int, op_type: str = 'add') -> int:
-        word_size_to_chunk_size_map_add = {16: 4, 32: 9, 64: 19}
-        word_size_to_chunk_size_map_mul = {16: 2, 32: 4, 64: 9}
-        try:
-            if op_type == 'add':
-                chunk_size = word_size_to_chunk_size_map_add[word_size]
-            else:
-                chunk_size = word_size_to_chunk_size_map_mul[word_size]
-        except KeyError:
-            raise ValueError("Provide the word_size from the following list [16, 32, 64]")
-        return chunk_size
 
     @staticmethod
     def _adjust_lens(a: str, b: str) -> Tuple[str, str]:
@@ -123,15 +111,19 @@ class LargeNumbersHelper:
         return total, carry
 
     @classmethod
-    def large_number_pow(cls, num: str, exp: str, word_size: int = 32) -> str:
-        return reduce(lambda num1, num2: cls.large_number_mul(num1, num2, word_size), [num] * int(exp))
+    def large_number_pow(cls, num: str, exp: str) -> str:
+        return reduce(lambda num1, num2: cls.large_number_mul(num1, num2), [num] * int(exp))
 
     @classmethod
-    def large_number_mul(cls, a: str, b: str, word_size: int = 32) -> str:
-        chunk_size = cls._get_chunk_size(word_size, 'mul')
+    def large_number_mul(cls, a: str, b: str) -> str:
+        """
+        Word size of the machine's register is assumed to be 64 bits.
+        For 64-bit registers the safe number of digits in an integer is 9.
+        """
+        chunk_size = 9
         digit_wise_res = [cls._mul_with_one_digit(b, int(digit), chunk_size) for digit in a[::-1]]
         digit_wise_res = [item + i * '0' for i, item in enumerate(digit_wise_res)]
-        return reduce(lambda num1, num2: cls.large_number_sum(num1, num2, word_size), digit_wise_res)
+        return reduce(lambda num1, num2: cls.large_number_sum(num1, num2), digit_wise_res)
 
     @classmethod
     def _mul_with_one_digit(cls, num: str, digit: int, chunk_size: int) -> str:
@@ -145,16 +137,16 @@ class LargeNumbersHelper:
         return (str(carry) + c).lstrip('0')
 
 
-def large_number_sum(a: str, b: str, word_size: int = 32) -> str:
-    return LargeNumbersHelper.large_number_sum(a, b, word_size)
+def large_number_sum(a: str, b: str) -> str:
+    return LargeNumbersHelper.large_number_sum(a, b)
 
 
-def large_number_mul(a: str, b: str, word_size: int = 32) -> str:
-    return LargeNumbersHelper.large_number_mul(a, b, word_size)
+def large_number_mul(a: str, b: str) -> str:
+    return LargeNumbersHelper.large_number_mul(a, b)
 
 
-def large_number_pow(num: str, exp: str, word_size: int = 32) -> str:
-    return LargeNumbersHelper.large_number_pow(num, exp, word_size)
+def large_number_pow(num: str, exp: str) -> str:
+    return LargeNumbersHelper.large_number_pow(num, exp)
 
 
 def num_combinations(n: int, r: int) -> int:

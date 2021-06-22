@@ -12,7 +12,7 @@ from lib.utils.numeric import large_number_pow
 
 @Timer(name='decorator')
 def execute_v1():
-    print(reduce(lambda char1, char2: int(char1) + int(char2), large_number_pow('2', '1000', 64)))
+    print(reduce(lambda char1, char2: int(char1) + int(char2), large_number_pow('2', '1000')))
 
 
 if __name__ == "__main__":

@@ -115,17 +115,8 @@ def large_number_sum_data():
 ])
 def test_large_number_sum(data, correct_total, request):
     data = request.getfixturevalue(data)
-    predicted_total = reduce(lambda a, b: large_number_sum(a, b, 64), data)
+    predicted_total = reduce(lambda a, b: large_number_sum(a, b), data)
     assert predicted_total == correct_total
-
-
-@pytest.mark.parametrize('chunk_size', [
-    10, 20, 30, 40, 50
-])
-def test_large_number_sum_wrong_chunk_size(chunk_size):
-    with pytest.raises(ValueError) as exc:
-        _ = large_number_sum('111111111111', '222222222222', chunk_size)
-    assert str(exc.value) == "Provide the word_size from the following list [16, 32, 64]"
 
 
 @pytest.mark.parametrize('num1, num2, correct_product', [
@@ -134,17 +125,8 @@ def test_large_number_sum_wrong_chunk_size(chunk_size):
      41549622603955309777243716069997997007620439937711509062916)
 ])
 def test_large_number_mul(num1, num2, correct_product):
-    predicted_product = large_number_mul(str(num1), str(num2), word_size=64)
+    predicted_product = large_number_mul(str(num1), str(num2))
     assert predicted_product == str(correct_product)
-
-
-@pytest.mark.parametrize('chunk_size', [
-    10, 20, 30, 40, 50
-])
-def test_large_number_mul_wrong_chunk_size(chunk_size):
-    with pytest.raises(ValueError) as exc:
-        _ = large_number_mul('111111111111', '222222222222', chunk_size)
-    assert str(exc.value) == "Provide the word_size from the following list [16, 32, 64]"
 
 
 @pytest.fixture()
@@ -160,14 +142,5 @@ def large_powers_data():
 def test_large_number_power(data, test_case_number, request):
     data = request.getfixturevalue(data)
     base, exp, correct_result = data[str(test_case_number)]
-    predicted_result = large_number_pow(str(base), str(exp), word_size=64)
+    predicted_result = large_number_pow(str(base), str(exp))
     assert predicted_result == str(correct_result)
-
-
-@pytest.mark.parametrize('chunk_size', [
-    10, 20, 30, 40, 50
-])
-def test_large_number_pow_wrong_chunk_size(chunk_size):
-    with pytest.raises(ValueError) as exc:
-        _ = large_number_pow('111111111111', '100', chunk_size)
-    assert str(exc.value) == "Provide the word_size from the following list [16, 32, 64]"

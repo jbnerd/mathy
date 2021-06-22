@@ -18,7 +18,7 @@ def execute_v1():
     """
     with open('solutions/data/13.txt') as infile:
         data = infile.read().strip().split('\n')
-    print(reduce(lambda a, b: large_number_sum(a, b, 64), data)[:10])
+    print(reduce(lambda a, b: large_number_sum(a, b), data)[:10])
 
 
 if __name__ == "__main__":
