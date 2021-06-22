@@ -109,19 +109,19 @@ class LargeNumberOpsHelper:
         return (str(carry) + c).lstrip('0')
 
 
-class LargeNumberAddOpUtils:
+class LargeNumberFirstDegreeOpUtils:
     """
-        Addition operation for large number represented as strings. Assuming that the machine's register word-size is 64
-        bits the safe number of digits for integer addition is 18.
+        Utilities for addition and subtraction operations of large numbers represented as strings. Assuming that the
+        machine's register word-size is 64 bits, the safe number of digits for using first degree ops on integers is 18.
     """
 
     _chunk_size: int = 18
     _mod: int = 10 ** _chunk_size
 
     @classmethod
-    def add(cls, a: str, b: str) -> str:
+    def operate(cls, a: str, b: str) -> str:
         a, b = cls._make_chunks(a, b)
-        result = [cls._add_chunks(chunk1, chunk2) for chunk1, chunk2 in zip(a, b)]
+        result = [cls._op_chunks(chunk1, chunk2) for chunk1, chunk2 in zip(a, b)]
         totals, carries = [item[0] for item in result] + [0], [0] + [item[1] for item in result]
         c = [str(total + carry).zfill(cls._chunk_size) for total, carry in zip(totals, carries)]
         return ''.join(c[::-1]).lstrip('0')
@@ -145,15 +145,63 @@ class LargeNumberAddOpUtils:
         return chunks[::-1]
 
     @classmethod
-    def _add_chunks(cls, chunk1: int, chunk2: int) -> Tuple[int, int]:
+    def _op_chunks(cls, chunk1: int, chunk2: int) -> Tuple[int, int]:
+        raise NotImplementedError
+
+
+class LargeNumberAddOpUtils(LargeNumberFirstDegreeOpUtils):
+
+    @classmethod
+    def add(cls, a: str, b: str) -> str:
+        return cls.operate(a, b)
+
+    @classmethod
+    def _op_chunks(cls, chunk1: int, chunk2: int) -> Tuple[int, int]:
         total = chunk1 + chunk2
         carry = int(total / cls._mod)
         total = total % cls._mod
         return total, carry
 
 
+class LargeNumberSubtractOpUtils(LargeNumberFirstDegreeOpUtils):
+
+    @classmethod
+    def subtract(cls, a: str, b: str) -> str:
+        cls._check_non_negative(a)
+        cls._check_non_negative(b)
+        if cls._is_smaller(a, b):
+            return '-' + cls.operate(b, a)
+        else:
+            return cls.operate(a, b)
+
+    @staticmethod
+    def _check_non_negative(num: str):
+        if num.startswith('-'):
+            raise ValueError("Provide positive numbers in the subtraction routine.")
+
+    @staticmethod
+    def _is_smaller(a: str, b: str) -> bool:
+        a, b = a.lstrip('0'), b.lstrip('0')
+        if len(b) > len(a) or (len(a) == len(b) and int(b[0]) > int(a[0])):
+            return True
+        else:
+            return False
+
+    @classmethod
+    def _op_chunks(cls, chunk1: int, chunk2: int) -> Tuple[int, int]:
+        carry = 0
+        if chunk1 < chunk2:
+            chunk1 += 10 ** cls._chunk_size
+            carry = -1
+        return chunk1 - chunk2, carry
+
+
 def large_number_sum(a: str, b: str) -> str:
     return LargeNumberAddOpUtils.add(a, b)
+
+
+def large_number_diff(a: str, b: str) -> str:
+    return LargeNumberSubtractOpUtils.subtract(a, b)
 
 
 def large_number_mul(a: str, b: str) -> str:

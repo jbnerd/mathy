@@ -6,7 +6,7 @@ import pytest
 
 from lib.utils.numeric import get_factors
 from lib.utils.numeric import sum_of_natural_numbers, sum_of_squares_of_natural_numbers, least_common_multiple, \
-    least_common_multiple_of_natural_numbers, large_number_sum, large_number_mul, large_number_pow
+    least_common_multiple_of_natural_numbers, large_number_sum, large_number_diff, large_number_mul, large_number_pow
 
 
 @pytest.mark.parametrize('num, correct_sum', [
@@ -120,6 +120,29 @@ def test_large_number_sum(data, request):
     predicted_total = reduce(lambda a, b: large_number_sum(a, b), data)
     correct_total = str(reduce(lambda a, b: int(a) + int(b), data))
     assert predicted_total == correct_total
+
+
+@pytest.mark.parametrize('num1, num2', [
+    ('9' * 50, '1' * 50),
+    ('11443333311111111100', '1144422222221111'),
+    ('122387876566565674', '31435454654554'),
+    ('11', '99'),
+    ('1', '99999999')
+])
+def test_large_number_diff(num1, num2):
+    predicted_diff = large_number_diff(num1, num2)
+    correct_diff = str(int(num1) - int(num2))
+    assert predicted_diff == correct_diff
+
+
+@pytest.mark.parametrize('num1, num2', [
+    ('-1', '9'),
+    ('1', '-9')
+])
+def test_large_number_diff_with_inverted_order(num1, num2):
+    with pytest.raises(ValueError) as exc:
+        _ = large_number_diff(num1, num2)
+    assert str(exc.value) == "Provide positive numbers in the subtraction routine."
 
 
 @pytest.mark.parametrize('num1, num2, correct_product', [
