@@ -110,12 +110,15 @@ def large_number_sum_data():
     return data
 
 
-@pytest.mark.parametrize('data, correct_total', [
-    ['large_number_sum_data', '5537376230390876637302048746832985971773659831892672']
+@pytest.mark.parametrize('data', [
+    ['large_number_sum_data'],
+    ['1' * 50, '9' * 50]
 ])
-def test_large_number_sum(data, correct_total, request):
-    data = request.getfixturevalue(data)
+def test_large_number_sum(data, request):
+    if type(data) == str:
+        data = request.getfixturevalue(data)
     predicted_total = reduce(lambda a, b: large_number_sum(a, b), data)
+    correct_total = str(reduce(lambda a, b: int(a) + int(b), data))
     assert predicted_total == correct_total
 
 
