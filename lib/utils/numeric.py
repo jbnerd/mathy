@@ -67,49 +67,44 @@ class LargeNumberOpsHelper:
     """
 
     @classmethod
-    def _pad_split_and_reverse(cls, num: str, chunk_size: int) -> List[str]:
-        """
-        Pads the given string in the beginning to target_len with zeroes and splits the string in chunks each of size
-        chunk_size.
-        """
-        target_len = cls.compute_divisible_len(len(num), chunk_size)
+    def large_number_pow(cls, num: str, exp: str) -> str:
+        return reduce(lambda num1, num2: LargeNumberMulOpUtils.multiply(num1, num2), [num] * int(exp))
+
+
+class LargeNumberOpUtils:
+    """
+        Utilities for addition, subtraction and multiplication operations of large numbers represented as strings. It is
+        assumed that the register word-size of the machine is 64-bits.
+    """
+
+    _chunk_size: int
+    _mod: int
+
+    @classmethod
+    def _make_chunks(cls, a: str, b: str) -> Tuple[Iterable[int], Iterable[int]]:
+        a, b = a.lstrip('0'), b.lstrip('0')
+        target_len = cls._compute_target_len(len(a), len(b))
+        a, b = cls._pad_split_and_reverse(a, target_len), cls._pad_split_and_reverse(b, target_len)
+        return map(int, a), map(int, b)
+
+    @classmethod
+    def _compute_target_len(cls, len_a: int, len_b: int) -> int:
+        max_len = max(len_a, len_b)
+        return cls.compute_divisible_len(max_len)
+
+    @classmethod
+    def compute_divisible_len(cls, str_len: int) -> int:
+        quotient = int(str_len / cls._chunk_size)
+        return (quotient + 1) * cls._chunk_size
+
+    @classmethod
+    def _pad_split_and_reverse(cls, num: str, target_len: int) -> List[str]:
         num = num.zfill(target_len)
-        chunks = [num[i:i+chunk_size] for i in range(0, target_len, chunk_size)]
+        chunks = [num[i:i + cls._chunk_size] for i in range(0, target_len, cls._chunk_size)]
         return chunks[::-1]
 
-    @staticmethod
-    def compute_divisible_len(str_len: int, chunk_size: int) -> int:
-        quotient = int(str_len / chunk_size)
-        return (quotient + 1) * chunk_size
 
-    @classmethod
-    def large_number_pow(cls, num: str, exp: str) -> str:
-        return reduce(lambda num1, num2: cls.large_number_mul(num1, num2), [num] * int(exp))
-
-    @classmethod
-    def large_number_mul(cls, a: str, b: str) -> str:
-        """
-        Word size of the machine's register is assumed to be 64 bits.
-        For 64-bit registers the safe number of digits in an integer is 9.
-        """
-        chunk_size = 9
-        digit_wise_res = [cls._mul_with_one_digit(b, int(digit), chunk_size) for digit in a[::-1]]
-        digit_wise_res = [item + i * '0' for i, item in enumerate(digit_wise_res)]
-        return reduce(lambda num1, num2: LargeNumberAddOpUtils.add(num1, num2), digit_wise_res)
-
-    @classmethod
-    def _mul_with_one_digit(cls, num: str, digit: int, chunk_size: int) -> str:
-        chunks = cls._pad_split_and_reverse(num, chunk_size)
-        c, carry, mod = [], 0, 10 ** chunk_size
-        for chunk in chunks:
-            chunk_res = int(chunk) * digit + carry
-            c.append(str(chunk_res % mod).zfill(chunk_size))
-            carry = int(chunk_res / mod)
-        c = ''.join(c[::-1])
-        return (str(carry) + c).lstrip('0')
-
-
-class LargeNumberFirstDegreeOpUtils:
+class LargeNumberFirstDegreeOpUtils(LargeNumberOpUtils):
     """
         Utilities for addition and subtraction operations of large numbers represented as strings. Assuming that the
         machine's register word-size is 64 bits, the safe number of digits for using first degree ops on integers is 18.
@@ -125,24 +120,6 @@ class LargeNumberFirstDegreeOpUtils:
         totals, carries = [item[0] for item in result] + [0], [0] + [item[1] for item in result]
         c = [str(total + carry).zfill(cls._chunk_size) for total, carry in zip(totals, carries)]
         return ''.join(c[::-1]).lstrip('0')
-
-    @classmethod
-    def _make_chunks(cls, a: str, b: str) -> Tuple[Iterable[int], Iterable[int]]:
-        a, b = a.lstrip('0'), b.lstrip('0')
-        target_len = cls._compute_target_len(len(a), len(b))
-        a, b = cls._pad_split_and_reverse(a, target_len), cls._pad_split_and_reverse(b, target_len)
-        return map(int, a), map(int, b)
-
-    @classmethod
-    def _compute_target_len(cls, len_a: int, len_b: int) -> int:
-        max_len = max(len_a, len_b)
-        return LargeNumberOpsHelper.compute_divisible_len(max_len, cls._chunk_size)
-
-    @classmethod
-    def _pad_split_and_reverse(cls, num: str, target_len: int) -> List[str]:
-        num = num.zfill(target_len)
-        chunks = [num[i:i + cls._chunk_size] for i in range(0, target_len, cls._chunk_size)]
-        return chunks[::-1]
 
     @classmethod
     def _op_chunks(cls, chunk1: int, chunk2: int) -> Tuple[int, int]:
@@ -196,6 +173,35 @@ class LargeNumberSubtractOpUtils(LargeNumberFirstDegreeOpUtils):
         return chunk1 - chunk2, carry
 
 
+class LargeNumberMulOpUtils(LargeNumberOpUtils):
+    """
+        Utilities for multiplication operation of large numbers represented as strings. Assuming that the machine's
+        register word-size is 64 bits, the safe number of digits for multiplication operation on integers is 9.
+    """
+
+    _chunk_size: int = 9
+    _mod: int = 10 ** _chunk_size
+
+    @classmethod
+    def multiply(cls, a: str, b: str) -> str:
+        # a, b = cls._make_chunks(a, b)
+        target_len = cls._compute_target_len(len(a), len(b))
+        a, b = cls._pad_split_and_reverse(a, target_len), cls._pad_split_and_reverse(b, target_len)
+        chunk_wise_res = [cls._mul_with_chunk(b, int(chunk)) for chunk in a]
+        chunk_wise_res = [item + i * cls._chunk_size * '0' for i, item in enumerate(chunk_wise_res)]
+        return reduce(lambda num1, num2: LargeNumberAddOpUtils.add(num1, num2), chunk_wise_res)
+
+    @classmethod
+    def _mul_with_chunk(cls, num: List[str], digit: int) -> str:
+        c, carry = [], 0,
+        for chunk in num:
+            chunk_res = int(chunk) * digit + carry
+            c.append(str(chunk_res % cls._mod).zfill(cls._chunk_size))
+            carry = int(chunk_res / cls._mod)
+        c = ''.join(c[::-1])
+        return (str(carry) + c).lstrip('0')
+
+
 def large_number_sum(a: str, b: str) -> str:
     return LargeNumberAddOpUtils.add(a, b)
 
@@ -205,7 +211,7 @@ def large_number_diff(a: str, b: str) -> str:
 
 
 def large_number_mul(a: str, b: str) -> str:
-    return LargeNumberOpsHelper.large_number_mul(a, b)
+    return LargeNumberMulOpUtils.multiply(a, b)
 
 
 def large_number_pow(num: str, exp: str) -> str:
