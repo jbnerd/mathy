@@ -6,7 +6,7 @@ Answer: 70600674
 from functools import reduce
 
 import _init_paths
-from lib.utils.generic import Timer
+from euler.utils.generic import Timer
 
 
 def read_data():

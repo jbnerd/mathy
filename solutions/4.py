@@ -13,8 +13,8 @@ searching a larger number.
 import sys
 
 import _init_paths
-from lib.utils.strings import is_palindrome_number
-from lib.utils.generic import Timer
+from euler.utils.strings import is_palindrome_number
+from euler.utils.generic import Timer
 
 
 @Timer()

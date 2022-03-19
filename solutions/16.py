@@ -6,8 +6,8 @@ Answer: 1366
 from functools import reduce
 
 import _init_paths
-from lib.utils.generic import Timer
-from lib.utils.numeric import large_number_pow
+from euler.utils.generic import Timer
+from euler.utils.numeric import large_number_pow
 
 
 @Timer(name='decorator')

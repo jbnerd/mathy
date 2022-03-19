@@ -4,8 +4,8 @@ Average execution times:
 Answer: 137846528820
 """
 import _init_paths
-from lib.utils.generic import Timer
-from lib.utils.numeric import num_combinations
+from euler.utils.generic import Timer
+from euler.utils.numeric import num_combinations
 
 
 @Timer(name='decorator')

@@ -4,8 +4,8 @@ Average execution times:
 Answer: 232792560
 """
 import _init_paths
-from lib.utils.numeric import sum_of_natural_numbers, sum_of_squares_of_natural_numbers
-from lib.utils.generic import Timer
+from euler.utils.numeric import sum_of_natural_numbers, sum_of_squares_of_natural_numbers
+from euler.utils.generic import Timer
 
 
 @Timer()

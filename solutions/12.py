@@ -9,9 +9,9 @@ import sys
 from functools import reduce
 
 import _init_paths
-from lib.utils.generic import Timer
-from lib.utils.numeric import sum_of_natural_numbers, get_factors
-from lib.utils.primes import prime_factorization
+from euler.utils.generic import Timer
+from euler.utils.numeric import sum_of_natural_numbers, get_factors
+from euler.utils.primes import prime_factorization
 
 
 @Timer(name='decorator')

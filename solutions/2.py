@@ -7,8 +7,8 @@ Answer: 4613732
 import sys
 
 import _init_paths
-from lib.sequence_generators import FibonacciSequenceGenerator
-from lib.utils.generic import Timer
+from euler.sequence_generators import FibonacciSequenceGenerator
+from euler.utils.generic import Timer
 
 
 def generate_numbers():

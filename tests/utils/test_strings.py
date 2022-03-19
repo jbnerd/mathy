@@ -1,6 +1,6 @@
 import pytest
 
-from lib.utils.strings import is_palindrome_number
+from euler.utils.strings import is_palindrome_number
 
 
 @pytest.mark.parametrize("palindrome", [

@@ -4,8 +4,8 @@ Average execution times:
 Answer: 23514624000
 """
 import _init_paths
-from lib.utils.strings import character_wise_product
-from lib.utils.generic import Timer
+from euler.utils.strings import character_wise_product
+from euler.utils.generic import Timer
 
 
 def read_data():

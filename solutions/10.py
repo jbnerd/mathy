@@ -6,8 +6,8 @@ Answer: 142913828922
 from functools import reduce
 
 import _init_paths
-from lib.utils.generic import Timer
-from lib.sequence_generators import PrimeNumberSequenceGenerator
+from euler.utils.generic import Timer
+from euler.sequence_generators import PrimeNumberSequenceGenerator
 
 
 @Timer(name='decorator')

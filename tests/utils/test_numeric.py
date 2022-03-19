@@ -4,8 +4,8 @@ import json
 
 import pytest
 
-from lib.utils.numeric import get_factors
-from lib.utils.numeric import sum_of_natural_numbers, sum_of_squares_of_natural_numbers, least_common_multiple, \
+from euler.utils.numeric import get_factors
+from euler.utils.numeric import sum_of_natural_numbers, sum_of_squares_of_natural_numbers, least_common_multiple, \
     least_common_multiple_of_natural_numbers, large_number_sum, large_number_diff, large_number_mul, large_number_pow
 
 
@@ -105,7 +105,7 @@ def test_get_factors_given_negative_number():
 
 @pytest.fixture()
 def large_number_sum_data():
-    with open('lib/test_data/50_large_numbers.txt') as infile:
+    with open('euler/test_data/50_large_numbers.txt') as infile:
         data = infile.read().strip().split('\n')
     return data
 
@@ -157,7 +157,7 @@ def test_large_number_mul(num1, num2, correct_product):
 
 @pytest.fixture()
 def large_powers_data():
-    with open('lib/test_data/large_powers.json') as infile:
+    with open('euler/test_data/large_powers.json') as infile:
         data = json.load(infile)
     return data
 

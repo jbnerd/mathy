@@ -10,7 +10,7 @@ import sys
 from math import sqrt
 
 import _init_paths
-from lib.utils.generic import Timer
+from euler.utils.generic import Timer
 
 
 @Timer()

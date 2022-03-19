@@ -7,8 +7,8 @@ Answer: 232792560
 import sys
 
 import _init_paths
-from lib.utils.numeric import least_common_multiple, least_common_multiple_of_natural_numbers
-from lib.utils.generic import Timer
+from euler.utils.numeric import least_common_multiple, least_common_multiple_of_natural_numbers
+from euler.utils.generic import Timer
 
 
 @Timer()

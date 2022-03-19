@@ -7,8 +7,8 @@ Answer: 233168
 import sys
 
 import _init_paths
-from lib.utils.generic import Timer
-from lib.utils.numeric import sum_of_natural_numbers
+from euler.utils.generic import Timer
+from euler.utils.numeric import sum_of_natural_numbers
 
 
 @Timer()

@@ -4,8 +4,8 @@ Average execution times:
 Answer: 837799
 """
 import _init_paths
-from lib.utils.generic import Timer
-from lib.sequence_generators import CollatzSequenceGenerator
+from euler.utils.generic import Timer
+from euler.sequence_generators import CollatzSequenceGenerator
 
 
 @Timer(name='decorator')

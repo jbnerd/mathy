@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from lib.sequence_generators import FibonacciSequenceGenerator, PrimeNumberSequenceGenerator, CollatzSequenceGenerator
+from euler.sequence_generators import FibonacciSequenceGenerator, PrimeNumberSequenceGenerator, CollatzSequenceGenerator
 
 
 @pytest.mark.parametrize('first, second', [
@@ -18,7 +18,7 @@ def test_fib_seq_generator_given_negative_seeds(first, second):
 
 @pytest.fixture
 def first_100_fib_numbers():
-    with open('lib/test_data/first_100_fib_numbers.txt') as infile:
+    with open('euler/test_data/first_100_fib_numbers.txt') as infile:
         data = infile.read().strip().split('\n')
     return list(map(int, data))
 
@@ -77,7 +77,7 @@ def test_fib_seq_generator_given_both_upper_bound_and_num_terms(upper_bound, num
 
 @pytest.fixture()
 def first_two_hundred_thousand_primes():
-    with open('lib/test_data/first_two_hundred_thousand_primes.txt') as infile:
+    with open('euler/test_data/first_two_hundred_thousand_primes.txt') as infile:
         data = infile.read().strip().split('\n')
     return list(map(int, data))
 
@@ -100,7 +100,7 @@ def test_prime_seq_generator(upper_bound, correct_primes, request):
 
 @pytest.fixture()
 def collatz_sequences():
-    with open('lib/test_data/collatz_sequences.json') as infile:
+    with open('euler/test_data/collatz_sequences.json') as infile:
         data = json.load(infile)
     return data
 

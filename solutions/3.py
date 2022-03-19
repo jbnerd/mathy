@@ -4,8 +4,8 @@ Average execution times:
 Answer: 6857
 """
 import _init_paths
-from lib.utils.primes import prime_factors
-from lib.utils.generic import Timer
+from euler.utils.primes import prime_factors
+from euler.utils.generic import Timer
 
 
 @Timer()
