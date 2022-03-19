@@ -5,5 +5,12 @@
 **/__pycache__/*
 
 # Pytest cache and settings
-*/.pytest_cache
+.benchmarks
 .coverage
+.pytest_cache
+
+# Builds and build data
+*.egg-info/
+build/
+dist/
+MANIFEST
