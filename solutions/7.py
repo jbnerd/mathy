@@ -1,11 +1,13 @@
 """
-Average execution times:
-    v1: (0.006092 seconds)
-Answer: 2000000
+[10001st prime](https://projecteuler.net/problem=7)
+
+Median execution times over 5 runs:
+    v1: 0.006567 seconds
+Answer: 104743
 """
 import _init_paths
-from euler.utils.primes import nth_prime
 from euler.utils.generic import Timer
+from euler.utils.primes import nth_prime
 
 
 @Timer()

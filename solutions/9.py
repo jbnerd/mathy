@@ -1,9 +1,11 @@
 """
-Average execution times:
-    v1: (9.379466 seconds)
-    v2: (0.085179 seconds)
-    v3: (0.011305 seconds)
-    v4: (0.000048 seconds)
+[Special Pythagorean triplet](https://projecteuler.net/problem=9)
+
+Median execution times over 5 runs:
+    v1: 8.951692 seconds
+    v2: 0.051675 seconds
+    v3: 0.011162 seconds
+    v4: 0.000032 seconds
 Answer: 31875000
 """
 import sys

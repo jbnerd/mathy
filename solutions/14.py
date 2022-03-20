@@ -1,14 +1,16 @@
 """
-Average execution times:
-    v1: (1.078704 seconds)
+[Longest Collatz sequence](https://projecteuler.net/problem=14)
+
+Median execution times over 5 runs:
+    v1: 1.255132 seconds
 Answer: 837799
 """
 import _init_paths
-from euler.utils.generic import Timer
 from euler.sequence_generators import CollatzSequenceGenerator
+from euler.utils.generic import Timer
 
 
-@Timer(name='decorator')
+@Timer()
 def execute_v1():
     print(CollatzSequenceGenerator.longest_sequence_seed(1000000))
 

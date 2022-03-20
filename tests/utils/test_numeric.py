@@ -12,7 +12,8 @@ from euler.utils.numeric import sum_of_natural_numbers, sum_of_squares_of_natura
 @pytest.mark.parametrize('num, correct_sum', [
     (0, 0),
     (10, 55),
-    (100, 5050)
+    (100, 5050),
+    (1000, 500500)
 ])
 def test_sum_of_natural_numbers(num, correct_sum):
     predicted_sum = sum_of_natural_numbers(num)

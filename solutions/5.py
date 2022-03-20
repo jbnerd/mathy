@@ -1,22 +1,20 @@
 """
-Average execution times:
-    v1: (0.000080 seconds)
-    v2: (0.000030 seconds)
+[Smallest multiple](https://projecteuler.net/problem=5)
+
+Median execution times over 5 runs:
+    v1: 0.000087 seconds
+    v2: 0.000031 seconds
 Answer: 232792560
 """
 import sys
 
 import _init_paths
-from euler.utils.numeric import least_common_multiple, least_common_multiple_of_natural_numbers
 from euler.utils.generic import Timer
+from euler.utils.numeric import least_common_multiple, least_common_multiple_of_natural_numbers
 
 
 @Timer()
 def execute_v1():
-    """
-    LCM of natural numbers is computed by creating an appropriate cache of prime numbers. The cache is used to compute
-    the highest power of the prime that is present as a factor of all numbers in the list.
-    """
     print(least_common_multiple([i for i in range(1, 21)]))
 
 

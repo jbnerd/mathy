@@ -1,11 +1,13 @@
 """
-Average execution times:
-    v1: (0.002185 seconds)
+[Largest product in a series](https://projecteuler.net/problem=8)
+
+Median execution times over 5 runs:
+    v1: 0.002258 seconds
 Answer: 23514624000
 """
 import _init_paths
-from euler.utils.strings import character_wise_product
 from euler.utils.generic import Timer
+from euler.utils.strings import character_wise_product
 
 
 def read_data():

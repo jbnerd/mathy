@@ -1,6 +1,8 @@
 """
-Average execution times:
-    v1: (0.000577 seconds)
+[Large sum](https://projecteuler.net/problem=13)
+
+Median execution times over 5 runs:
+    v1: 0.000815 seconds
 Answer: 5537376230
 """
 from functools import reduce

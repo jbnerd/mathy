@@ -66,12 +66,13 @@ class PrimeNumberSequenceGenerator:
         Optimizations to the standard sieve algorithm:
             1) Consider only odd values to halve the search space and save on memory usage:
                     The sieve list consists of boolean values corresponding to every odd number less than upper_bound.
-                    Thus every ith element in sieve represents the prime number status of the number 2i+1.
+                    Thus, every ith element in sieve represents the prime number status of the number 2i+1.
             2) The search need only be done till the sqrt(upper_bound):
                     cross_limit defines this limit.
             3) For every prime number p, the crossing out need only begin from p^2 because all multiples of p before p^2
-               would also be a multiple of a number smaller than p; hence must've already been crossed out:
-                    The index of 2i+1 is i, so the index of (2i+1))^2 would be 2i(i+1).
+               would also be a multiple of a number smaller than p; For example, the numbers 2*p, 3*p or 5*p are also
+                multiples of 2, 3 and, 4 respectively. Hence, they'll already been crossed out:
+                    The index of 2i+1 is i, so the index of (2i+1)^2 would be 2i(i+1).
         """
         if upper_bound < 2:
             return []

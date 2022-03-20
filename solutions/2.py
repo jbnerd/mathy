@@ -1,7 +1,9 @@
 """
-Average execution times:
+[Even Fibonacci numbers](https://projecteuler.net/problem=2)
+
+Median execution times over 5 runs:
     v1: 0.000028 seconds
-    v2: 0.000025 seconds
+    v2: 0.000024 seconds
 Answer: 4613732
 """
 import sys

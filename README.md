@@ -1,9 +1,11 @@
-# Project Euler
+# Euler
 
-The `README.md` will be used as a checklist of the problems that are
-solved with problem names and links for navigability.
+Euler is a library for number theoretic computations. The inspiration
+for writing this library comes from solving problems from
+[Project Euler](https://projecteuler.net/).
 
-## Problems
+
+## Checklist
 
 - [X] 1: [Multiples of 3 and 5](https://projecteuler.net/problem=1)
 - [X] 2: [Even Fibonacci numbers](https://projecteuler.net/problem=2)

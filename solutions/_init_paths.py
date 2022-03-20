@@ -1,3 +1,5 @@
+import os
 import sys
 
-sys.path.insert(0, '/home/jbnerd/code_bases/project_euler/')
+root_path = '/'.join(os.path.abspath(__file__).split('/')[:-2])
+sys.path.insert(0, root_path)

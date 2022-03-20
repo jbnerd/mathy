@@ -1,6 +1,8 @@
 """
-Average execution times:
-    v1: (0.001243 seconds)
+[Largest product in a grid](https://projecteuler.net/problem=11)
+
+Median execution times over 5 runs:
+    v1: 0.001040 seconds
 Answer: 70600674
 """
 from functools import reduce

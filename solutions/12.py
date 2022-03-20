@@ -1,8 +1,10 @@
 """
-Average execution times:
-    v1: (2.416296 seconds)
-    v2: (0.173168 seconds)
-    v3: (0.089309 seconds)
+[Highly divisible triangular number](https://projecteuler.net/problem=12)
+
+Median execution times over 5 runs:
+    v1: 2.416296 seconds
+    v2: 0.173168 seconds
+    v3: 0.089309 seconds
 Answer: 76576500
 """
 import sys
@@ -14,7 +16,7 @@ from euler.utils.numeric import sum_of_natural_numbers, get_factors
 from euler.utils.primes import prime_factorization
 
 
-@Timer(name='decorator')
+@Timer()
 def execute_v1():
     """Brute force approach - triangular numbers are generated using the formula."""
     i = 1

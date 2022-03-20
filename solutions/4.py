@@ -1,20 +1,21 @@
 """
-Average execution times:
-    v1: (0.296354 seconds)
-    v2: (0.147609 seconds)
-    v3: (0.001563 seconds)
-    v4: (0.000402 seconds)
+[Largest palindrome product](https://projecteuler.net/problem=4)
+
+Median execution times over 5 runs:
+    v1: 0.192799 seconds
+    v2: 0.097060 seconds
+    v3: 0.001087 seconds
+    v4: 0.000295 seconds
 Answer: 906609
 
-The problem is solved by searching on the appropriate search  space. For example 111111 = 143 * 777 is one of the first
-palindromic number that comes to mind and has two three-digit factors. Hence, it can be used as a baseline number for
-searching a larger number.
+111111 = 143 * 777 is one of the first palindromic number that comes to mind that has two three-digit factors. Hence, it
+can be used as a baseline number for searching a larger number.
 """
 import sys
 
 import _init_paths
-from euler.utils.strings import is_palindrome_number
 from euler.utils.generic import Timer
+from euler.utils.strings import is_palindrome_number
 
 
 @Timer()
@@ -48,7 +49,7 @@ def execute_v2():
 def execute_v3():
     """
     Instead of searching the candidates from the small to large, the loop can be reversed to find the desired number
-    early. The search is pruned by preempting the search for the second factor as soon as the generated candidate gets
+    early. The search is pruned by preempting the loop for the second factor as soon as the generated candidate gets
     smaller than the available max_palindrome.
     """
     max_palindrome = 111111
@@ -66,7 +67,7 @@ def execute_v3():
 def execute_v4():
     """
     Let the largest number we have to find be P. P must be 6 digit because 111111 is the baseline and P must be greater
-    than the baseline. Thus,
+    than or equal to the baseline. Thus,
         P = 100000x + 10000y + 1000z + 100z + 10y + x = 11 * (9091x + 910y + 100z)
     Since P is divisible by 11, at least one of the factors of P must be divisible by 11. This fact is leveraged to
     prune the search space even further.

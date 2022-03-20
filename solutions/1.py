@@ -1,7 +1,9 @@
 """
-Average execution times:
-    v1: 0.000075 seconds
-    v2: 0.000012 seconds
+[Multiples of 3 and 5](https://projecteuler.net/problem=1)
+
+Median execution times over 5 runs:
+    v1: 0.000072 seconds
+    v2: 0.000014 seconds
 Answer: 233168
 """
 import sys
@@ -23,11 +25,11 @@ def execute_v2():
     The desired sum (S) can be represented as the sum of all numbers divisible by 3 (S3) added with sum of all numbers
     divisible by 5 (S5) minus the sum of all numbers divisible by 15 (S15) in the given range. S15 has to be subtracted
     because the numbers divisible by 15 will be counted twice.
-    Therefore S = S3 + S5 - S15
+    Therefore, S = S3 + S5 - S15
 
     S3 = 3 + 6 + 9 + 12 + ... + 999 = 3 * (1 + 2 + 3 + 4 + ... + 333)
-    S5 = 5 * (1 + 2 + 3 + ... + 199)
-    S15 = 15 * (1 + 2 + 3 + ... + 66)
+    S5 = 5 + 10 + 15 + 20 + ... + 995 = 5 * (1 + 2 + 3 + 4 + ... + 199)
+    S15 = 15 + 30 + 45 + 60 + ... + 990 = 15 * (1 + 2 + 3 + 4 + ... + 66)
     """
     print(3 * sum_of_natural_numbers(333) + 5 * sum_of_natural_numbers(199) - 15 * sum_of_natural_numbers(66))
 

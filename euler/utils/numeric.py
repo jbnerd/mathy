@@ -18,6 +18,10 @@ def sum_of_squares_of_natural_numbers(n: int) -> int:
 
 
 def least_common_multiple(numbers: List[int]) -> int:
+    """
+    LCM of natural numbers is computed by creating an appropriate cache of prime numbers. The cache is used to compute
+    the highest power of the prime that is present as a factor of all numbers in the list.
+    """
     if any([number <= 0 for number in numbers]):
         raise ValueError("Provide positive integers only.")
     primes, lcm = PrimeNumberSequenceGenerator.generate(max(numbers)), 1
@@ -73,8 +77,8 @@ class LargeNumberOpsHelper:
 
 class LargeNumberOpUtils:
     """
-        Utilities for addition, subtraction and multiplication operations of large numbers represented as strings. It is
-        assumed that the register word-size of the machine is 64-bits.
+    Utilities for addition, subtraction and multiplication operations of large numbers represented as strings. It is
+    assumed that the register word-size of the machine is 64-bits.
     """
 
     _chunk_size: int
@@ -106,8 +110,8 @@ class LargeNumberOpUtils:
 
 class LargeNumberFirstDegreeOpUtils(LargeNumberOpUtils):
     """
-        Utilities for addition and subtraction operations of large numbers represented as strings. Assuming that the
-        machine's register word-size is 64 bits, the safe number of digits for using first degree ops on integers is 18.
+    Utilities for addition and subtraction operations of large numbers represented as strings. Assuming that the
+    machine's register word-size is 64 bits, the safe number of digits for using first degree ops on integers is 18.
     """
 
     _chunk_size: int = 18
@@ -175,8 +179,8 @@ class LargeNumberSubtractOpUtils(LargeNumberFirstDegreeOpUtils):
 
 class LargeNumberMulOpUtils(LargeNumberOpUtils):
     """
-        Utilities for multiplication operation of large numbers represented as strings. Assuming that the machine's
-        register word-size is 64 bits, the safe number of digits for multiplication operation on integers is 9.
+    Utilities for multiplication operation of large numbers represented as strings. Assuming that the machine's
+    register word-size is 64 bits, the safe number of digits for multiplication operation on integers is 9.
     """
 
     _chunk_size: int = 9
