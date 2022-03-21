@@ -8,9 +8,8 @@ Answer: 233168
 """
 import sys
 
-import _init_paths
 from euler.utils.generic import Timer
-from euler.utils.numeric import sum_of_natural_numbers
+from euler.numeric import sum_of_natural_numbers
 
 
 @Timer()

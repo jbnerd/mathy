@@ -5,9 +5,8 @@ Median execution times over 5 runs:
     v1: 0.000014 seconds
 Answer: 25164150
 """
-import _init_paths
 from euler.utils.generic import Timer
-from euler.utils.numeric import sum_of_natural_numbers, sum_of_squares_of_natural_numbers
+from euler.numeric import sum_of_natural_numbers, sum_of_squares_of_natural_numbers
 
 
 @Timer()

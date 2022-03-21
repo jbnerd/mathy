@@ -7,9 +7,8 @@ Answer: 5537376230
 """
 from functools import reduce
 
-import _init_paths
 from euler.utils.generic import Timer
-from euler.utils.numeric import large_number_sum
+from euler.numeric import large_number_sum
 
 
 @Timer()

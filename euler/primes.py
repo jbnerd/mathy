@@ -1,7 +1,7 @@
 from math import ceil, log, sqrt
 from typing import List, Tuple
 
-from euler.sequence_generators import PrimeNumberSequenceGenerator
+from euler.utils.sequence_generators import PrimeNumberSequenceGenerator
 
 
 class PrimeFactorizationHelper:

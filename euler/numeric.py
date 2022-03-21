@@ -2,7 +2,7 @@ from functools import reduce
 from math import log, sqrt
 from typing import Iterable, List, Tuple
 
-from euler.sequence_generators import PrimeNumberSequenceGenerator
+from euler.utils.sequence_generators import PrimeNumberSequenceGenerator
 
 
 def sum_of_natural_numbers(n: int) -> int:

@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from euler.sequence_generators import FibonacciSequenceGenerator, PrimeNumberSequenceGenerator, CollatzSequenceGenerator
+from euler.utils.sequence_generators import FibonacciSequenceGenerator, PrimeNumberSequenceGenerator, CollatzSequenceGenerator
 
 
 @pytest.mark.parametrize('first, second', [

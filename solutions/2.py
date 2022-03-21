@@ -8,8 +8,7 @@ Answer: 4613732
 """
 import sys
 
-import _init_paths
-from euler.sequence_generators import FibonacciSequenceGenerator
+from euler.utils.sequence_generators import FibonacciSequenceGenerator
 from euler.utils.generic import Timer
 
 

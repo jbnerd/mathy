@@ -5,9 +5,8 @@ Median execution times over 5 runs:
     v1: 0.006567 seconds
 Answer: 104743
 """
-import _init_paths
 from euler.utils.generic import Timer
-from euler.utils.primes import nth_prime
+from euler.primes import nth_prime
 
 
 @Timer()

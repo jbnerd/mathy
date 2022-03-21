@@ -5,8 +5,7 @@ Median execution times over 5 runs:
     v1: 1.255132 seconds
 Answer: 837799
 """
-import _init_paths
-from euler.sequence_generators import CollatzSequenceGenerator
+from euler.utils.sequence_generators import CollatzSequenceGenerator
 from euler.utils.generic import Timer
 
 

@@ -2,7 +2,7 @@ from typing import List
 
 import pytest
 
-from euler.utils.primes import is_prime, nth_prime, prime_factors, prime_factorization
+from euler.primes import is_prime, nth_prime, prime_factors, prime_factorization
 
 
 @pytest.mark.parametrize('num', [

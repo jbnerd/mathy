@@ -10,10 +10,9 @@ Answer: 76576500
 import sys
 from functools import reduce
 
-import _init_paths
 from euler.utils.generic import Timer
-from euler.utils.numeric import sum_of_natural_numbers, get_factors
-from euler.utils.primes import prime_factorization
+from euler.numeric import sum_of_natural_numbers, get_factors
+from euler.primes import prime_factorization
 
 
 @Timer()

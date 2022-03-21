@@ -4,8 +4,8 @@ import json
 
 import pytest
 
-from euler.utils.numeric import get_factors
-from euler.utils.numeric import sum_of_natural_numbers, sum_of_squares_of_natural_numbers, least_common_multiple, \
+from euler.numeric import get_factors
+from euler.numeric import sum_of_natural_numbers, sum_of_squares_of_natural_numbers, least_common_multiple, \
     least_common_multiple_of_natural_numbers, large_number_sum, large_number_diff, large_number_mul, large_number_pow
 
 

@@ -5,9 +5,8 @@ Median execution times over 5 runs:
     v1: 0.000020 seconds
 Answer: 137846528820
 """
-import _init_paths
 from euler.utils.generic import Timer
-from euler.utils.numeric import num_combinations
+from euler.numeric import num_combinations
 
 
 @Timer()

@@ -8,9 +8,8 @@ Answer: 232792560
 """
 import sys
 
-import _init_paths
 from euler.utils.generic import Timer
-from euler.utils.numeric import least_common_multiple, least_common_multiple_of_natural_numbers
+from euler.numeric import least_common_multiple, least_common_multiple_of_natural_numbers
 
 
 @Timer()
