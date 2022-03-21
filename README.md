@@ -23,3 +23,4 @@ for writing this library comes from solving problems from
 - [X] 14: [Longest Collatz sequence](https://projecteuler.net/problem=14)
 - [X] 15: [Lattice paths](https://projecteuler.net/problem=15)
 - [X] 16: [Power digit sum](https://projecteuler.net/problem=16)
+- [X] 17: [Number letter counts](https://projecteuler.net/problem=17)
